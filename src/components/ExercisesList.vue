@@ -27,6 +27,26 @@ export default {
       includeStudentScores
     );
   },
+  computed: {
+    addAvgScore: function() {
+      return this.exercises.forEach(
+        (exercise) => (exercise.averageScore = this.calcAvgScore(exercise))
+      );
+    },
+  },
+  methods: {
+    calcAvgScore: function(exercise) {
+      let exerciseScores = [];
+      exercise.studentScores.forEach((student) =>
+        exerciseScores.push(student.score)
+      );
+
+      return (
+        exerciseScores.reduce((sum, score) => sum + score) /
+        exerciseScores.length
+      );
+    },
+  },
 };
 </script>
 
