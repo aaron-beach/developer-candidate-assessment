@@ -21,8 +21,11 @@ export default {
     };
   },
   async created() {
+    const includeStudentScores = '?_embed=studentScores';
     const exerciseService = new ExerciseService();
-    this.exercises = await exerciseService.getAll();
+    this.exercises = await exerciseService._getAllIncluding(
+      includeStudentScores
+    );
   },
 };
 </script>
