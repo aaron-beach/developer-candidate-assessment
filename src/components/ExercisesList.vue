@@ -6,7 +6,7 @@
       v-for="(exercise, i) in exercises"
       :key="exercise.id"
     >
-      {{ exercise.name }}
+      {{ exercise.name }} {{ exercise.averageScore }}
     </div>
   </div>
 </template>
@@ -26,25 +26,30 @@ export default {
     this.exercises = await exerciseService._getAllIncluding(
       includeStudentScores
     );
+    this.addAverageScore();
   },
   computed: {
-    addAvgScore: function() {
+    addAverageScore: function() {
       return this.exercises.forEach(
-        (exercise) => (exercise.averageScore = this.calcAvgScore(exercise))
+        (exercise) =>
+          (exercise.averageScore = this.calcAverageExerciseScore(
+            exercise.studentScores
+          ))
       );
     },
   },
   methods: {
-    calcAvgScore: function(exercise) {
-      let exerciseScores = [];
-      exercise.studentScores.forEach((student) =>
-        exerciseScores.push(student.score)
-      );
+    calcAverageExerciseScore: function(object) {
+      let scores = this.getArrayOfStudentScores(object);
+      const totalScore = scores.reduce((sum, score) => sum + score);
+      const averageScore = totalScore / scores.length;
 
-      return (
-        exerciseScores.reduce((sum, score) => sum + score) /
-        exerciseScores.length
-      );
+      return averageScore.toFixed(1);
+    },
+    getArrayOfStudentScores: function(object) {
+      let exerciseScores = [];
+      object.forEach((student) => exerciseScores.push(student.score));
+      return exerciseScores;
     },
   },
 };
