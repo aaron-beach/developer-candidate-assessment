@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h1>Exercises</h1>
+    <div class="title">
+      <h1>Exercises</h1>
+      <h1 class="average-score">Avg.Score:</h1>
+    </div>
     <card class="exercises">
       <exercises-list />
     </card>
@@ -17,6 +20,11 @@ export default {
 </script>
 
 <style scoped>
+.title {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
 .exercises {
   width: 100%;
 }

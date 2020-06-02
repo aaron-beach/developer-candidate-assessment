@@ -6,7 +6,10 @@
       v-for="(exercise, i) in exercises"
       :key="exercise.id"
     >
-      {{ exercise.name }} {{ exercise.averageScore }}
+      {{ exercise.name }}
+      <span class="exercise-average-score">
+        {{ exercise.averageScore }}
+      </span>
     </div>
   </div>
 </template>
@@ -32,14 +35,14 @@ export default {
     addAverageScore: function() {
       return this.exercises.forEach(
         (exercise) =>
-          (exercise.averageScore = this.calcAverageExerciseScore(
+          (exercise.averageScore = this.calculateAverageExerciseScore(
             exercise.studentScores
           ))
       );
     },
   },
   methods: {
-    calcAverageExerciseScore: function(object) {
+    calculateAverageExerciseScore: function(object) {
       let scores = this.getArrayOfStudentScores(object);
       const totalScore = scores.reduce((sum, score) => sum + score);
       const averageScore = totalScore / scores.length;
@@ -71,5 +74,10 @@ export default {
 
 .stripe {
   background-color: #f5f5f5;
+}
+
+.exercise-average-score {
+  margin-left: auto;
+  margin-right: 0;
 }
 </style>
