@@ -29,30 +29,38 @@ export default {
     this.exercises = await exerciseService._getAllIncluding(
       includeStudentScores
     );
-    this.addAverageScore();
+    this.getAverageExerciseScore;
   },
   computed: {
-    addAverageScore: function() {
-      return this.exercises.forEach(
-        (exercise) =>
-          (exercise.averageScore = this.calculateAverageExerciseScore(
-            exercise.studentScores
-          ))
-      );
+    classScore: function() {
+      return this.getClassAverageScore();
+    },
+    getAverageExerciseScore: function() {
+      return this.exercises.forEach((exercise) => {
+        const scores = this.getArrayOfStudentScores(exercise.studentScores);
+        exercise.averageScore = this.calculateAverageScore(scores);
+      });
     },
   },
   methods: {
-    calculateAverageExerciseScore: function(object) {
-      let scores = this.getArrayOfStudentScores(object);
+    calculateAverageScore: function(scores) {
       const totalScore = scores.reduce((sum, score) => sum + score);
       const averageScore = totalScore / scores.length;
-
       return averageScore.toFixed(1);
     },
     getArrayOfStudentScores: function(object) {
       let exerciseScores = [];
       object.forEach((student) => exerciseScores.push(student.score));
       return exerciseScores;
+    },
+    getClassAverageScore: function() {
+      let scores = [];
+      this.exercises.forEach((exercise) => {
+        scores.push(exercise.averageScore);
+      });
+      return (
+        scores.reduce((sum, score) => +sum + +score) / scores.length
+      ).toFixed(1);
     },
   },
 };
