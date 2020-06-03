@@ -18,6 +18,11 @@
 import ExerciseService from '@/services/ExerciseService';
 
 export default {
+  props: {
+    averageScore: {
+      type: Number,
+    },
+  },
   data() {
     return {
       exercises: [],
@@ -30,11 +35,9 @@ export default {
       includeStudentScores
     );
     this.getAverageExerciseScore;
+    this.classScore();
   },
   computed: {
-    classScore: function() {
-      return this.getClassAverageScore();
-    },
     getAverageExerciseScore: function() {
       return this.exercises.forEach((exercise) => {
         const scores = this.getArrayOfStudentScores(exercise.studentScores);
@@ -43,8 +46,12 @@ export default {
     },
   },
   methods: {
+    async classScore() {
+      const score = this.getClassAverageScore();
+      this.$emit('update:averageScore', score);
+    },
     calculateAverageScore: function(scores) {
-      const totalScore = scores.reduce((sum, score) => sum + score);
+      const totalScore = scores.reduce((sum, score) => +sum + +score);
       const averageScore = totalScore / scores.length;
       return averageScore.toFixed(1);
     },
@@ -58,9 +65,7 @@ export default {
       this.exercises.forEach((exercise) => {
         scores.push(exercise.averageScore);
       });
-      return (
-        scores.reduce((sum, score) => +sum + +score) / scores.length
-      ).toFixed(1);
+      return this.calculateAverageScore(scores);
     },
   },
 };
