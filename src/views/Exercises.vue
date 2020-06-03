@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="title">
+    <div class="title" v-if="!details">
       <h1>Exercises</h1>
       <h1 class="average-score">Avg.Score: {{ averageScore }}</h1>
     </div>
@@ -8,8 +8,13 @@
       <exercises-list
         :averageScore.sync="averageScore"
         @showDetail="updateExerciseDetail"
+        v-if="!details"
       />
-      <exercise-detail v-show="exerciseDetails" :exercise="exerciseDetails" />
+      <exercise-detail
+        v-if="details"
+        :exercise="exerciseDetails"
+        @showAll="showAllExcersizes"
+      />
     </card>
   </div>
 </template>
@@ -22,6 +27,7 @@ import ExerciseDetail from '@/components/ExerciseDetail';
 export default {
   data() {
     return {
+      details: false,
       averageScore: 0,
       exerciseDetails: {},
     };
@@ -29,7 +35,11 @@ export default {
   components: { Card, ExercisesList, ExerciseDetail },
   methods: {
     updateExerciseDetail(variable) {
+      this.details = !this.details;
       this.exerciseDetails = variable;
+    },
+    showAllExcersizes: function() {
+      this.details = !this.details;
     },
   },
 };
