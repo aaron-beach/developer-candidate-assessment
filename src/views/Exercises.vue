@@ -21,11 +21,6 @@ export default {
     };
   },
   components: { Card, ExercisesList },
-  // methods: {
-  //   updateScore: function(score) {
-  //     this.averageScore = score;
-  //   },
-  // },
 };
 </script>
 
