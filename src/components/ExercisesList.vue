@@ -5,6 +5,7 @@
       :class="{ stripe: i % 2 === 0 }"
       v-for="(exercise, i) in exercises"
       :key="exercise.id"
+      @click="showDetail(exercise.id)"
     >
       {{ exercise.name }}
       <span class="exercise-average-score">
@@ -66,6 +67,12 @@ export default {
         scores.push(exercise.averageScore);
       });
       return this.calculateAverageScore(scores);
+    },
+    showDetail: function(exercise) {
+      const exerciseAverage = this.exercises.find(
+        (elem) => elem.id === exercise
+      );
+      this.$emit('showDetail', exerciseAverage);
     },
   },
 };
