@@ -49,7 +49,7 @@ export default {
   methods: {
     async classScore() {
       const score = this.getClassAverageScore();
-      this.$emit('update:averageScore', score);
+      this.$emit('update:averageScore', Number(score));
     },
     calculateAverageScore: function(scores) {
       const totalScore = scores.reduce((sum, score) => +sum + +score);
