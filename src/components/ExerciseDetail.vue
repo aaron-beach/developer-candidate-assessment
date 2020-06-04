@@ -10,15 +10,18 @@
       class="exercise"
       :class="{ stripe: i % 2 === 0 }"
       v-for="(detail, i) in scores"
-      :key="detail.id"
+      :key="i"
     >
       <div class="student-avatar--container">
         <img :src="detail.avatar" alt="student avatar" class="student-avatar" />
       </div>
       {{ detail.name }}
-      <span class="student-score">
-        {{ detail.score }}
-      </span>
+      <input
+        class="student-score edit-me"
+        :placeholder="detail.score"
+        @keydown.enter="endEdit"
+        v-model="newScore[i]"
+      />
     </div>
   </div>
 </template>
@@ -35,11 +38,14 @@ export default {
   data: function() {
     return {
       students: [],
+      editField: '',
+      newScore: [],
     };
   },
   async created() {
     const studentService = new StudentService();
     this.students = await studentService.getAll();
+    this.exerciseId = this.exercise.exerciseId;
   },
   computed: {
     scores: function() {
@@ -51,6 +57,10 @@ export default {
   methods: {
     showAll: function() {
       this.$emit('showAll');
+    },
+    endEdit() {
+      event.currentTarget.blur();
+      // On enter close edit input and save value to API
     },
   },
 };
@@ -81,17 +91,33 @@ export default {
 }
 
 .student-score {
+  border: none;
+  background-image: none;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  font-size: 4rem;
+  height: 100%;
   margin-left: auto;
-  margin-right: 0;
+  margin-right: 20px;
+  text-align: center;
+  width: 15rem;
+}
+.edit-me:focus {
+  width: 15rem;
+  height: 100%;
+  border-radius: 20px;
+  background-color: pink;
 }
 
 .student-avatar {
-  width: 100%;
+  width: 150px;
 }
 .student-avatar--container {
   width: 150px;
   height: 150px;
   overflow: hidden;
-  border-radius: 100%;
+  border-radius: 150px;
 }
 </style>

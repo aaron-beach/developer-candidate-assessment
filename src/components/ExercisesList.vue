@@ -32,19 +32,12 @@ export default {
   async created() {
     const includeStudentScores = '?_embed=studentScores';
     const exerciseService = new ExerciseService();
+    await exerciseService.getAll();
     this.exercises = await exerciseService._getAllIncluding(
       includeStudentScores
     );
-    this.getAverageExerciseScore;
+    this.getAverageScore();
     this.classScore();
-  },
-  computed: {
-    getAverageExerciseScore: function() {
-      return this.exercises.forEach((exercise) => {
-        const scores = this.getArrayOfStudentScores(exercise.studentScores);
-        exercise.averageScore = this.calculateAverageScore(scores);
-      });
-    },
   },
   methods: {
     async classScore() {
@@ -73,6 +66,16 @@ export default {
         (elem) => elem.id === exercise
       );
       this.$emit('showDetail', exerciseAverage);
+    },
+    async getAverageScore() {
+      try {
+        this.exercises.forEach((exercise) => {
+          const scores = this.getArrayOfStudentScores(exercise.studentScores);
+          exercise.averageScore = this.calculateAverageScore(scores);
+        });
+      } catch (ex) {
+        console.log(ex);
+      }
     },
   },
 };
