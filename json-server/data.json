@@ -139,13 +139,13 @@
     {
       "studentId": 1,
       "exerciseId": 1,
-      "score": 3,
+      "score": "null",
       "id": 0
     },
     {
       "studentId": 1,
       "exerciseId": 2,
-      "score": 2,
+      "score": "1",
       "id": 1
     },
     {
@@ -187,7 +187,7 @@
     {
       "studentId": 2,
       "exerciseId": 1,
-      "score": 3,
+      "score": "1",
       "id": 8
     },
     {
@@ -331,7 +331,7 @@
     {
       "studentId": 5,
       "exerciseId": 1,
-      "score": 2,
+      "score": "3",
       "id": 32
     },
     {
@@ -475,7 +475,7 @@
     {
       "studentId": 8,
       "exerciseId": 1,
-      "score": 3,
+      "score": "1",
       "id": 56
     },
     {

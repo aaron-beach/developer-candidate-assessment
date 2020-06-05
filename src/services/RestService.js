@@ -35,4 +35,15 @@ export default class RestService {
     const response = await axios.get(`${this.#endpointUrl}/${suffix}`);
     return response.data;
   }
+
+  /**
+   * Updates (Patches) resource from the API, includes the suffix in the request.
+   *
+   * @param {string} suffix - Additional value to be added to the root URI for
+   * a list of resrouces.
+   */
+  async _updateEntry(suffix = '', data) {
+    const response = await axios.patch(`${this.#endpointUrl}/${suffix}`, data);
+    return response.data;
+  }
 }

@@ -28,6 +28,7 @@
 
 <script>
 import StudentService from '@/services/StudentService';
+import ScoresService from '@/services/ScoresService';
 export default {
   name: 'ExerciseDetail',
   props: {
@@ -38,14 +39,12 @@ export default {
   data: function() {
     return {
       students: [],
-      editField: '',
       newScore: [],
     };
   },
   async created() {
     const studentService = new StudentService();
     this.students = await studentService.getAll();
-    this.exerciseId = this.exercise.exerciseId;
   },
   computed: {
     scores: function() {
@@ -61,6 +60,21 @@ export default {
     endEdit() {
       event.currentTarget.blur();
       // On enter close edit input and save value to API
+      this.updateScores();
+    },
+    async updateScores() {
+      const scoresService = new ScoresService();
+      let position = 0;
+      for (let i = 0; i < this.newScore.length; i++) {
+        if (this.newScore[i] != undefined) {
+          position = i;
+        }
+      }
+      const updateScore = {
+        score: this.newScore[position],
+        studentId: this.students[position].id,
+      };
+      await scoresService._updateEntry(this.scores[position].id, updateScore);
     },
   },
 };
