@@ -20,7 +20,7 @@
         class="student-score edit-me"
         :placeholder="detail.score"
         @keydown.enter="endEdit"
-        v-model="newScore[i]"
+        v-model.trim="newScore[i]"
       />
     </div>
   </div>
