@@ -12,23 +12,14 @@
       v-for="(detail, i) in scores"
       :key="i"
     >
-      <div class="student-avatar--container">
-        <img :src="detail.avatar" alt="student avatar" class="student-avatar" />
-      </div>
-      {{ detail.name }}
-      <input
-        class="student-score edit-me"
-        :placeholder="detail.score"
-        @keydown.enter="endEdit"
-        v-model.trim="newScore[i]"
-      />
+      <student-exercise :student="detail"></student-exercise>
     </div>
   </div>
 </template>
 
 <script>
 import StudentService from '@/services/StudentService';
-import ScoresService from '@/services/ScoresService';
+import StudentExercise from './StudentExercise';
 export default {
   name: 'ExerciseDetail',
   props: {
@@ -39,8 +30,10 @@ export default {
   data: function() {
     return {
       students: [],
-      newScore: [],
     };
+  },
+  components: {
+    StudentExercise,
   },
   async created() {
     const studentService = new StudentService();
@@ -56,25 +49,6 @@ export default {
   methods: {
     showAll: function() {
       this.$emit('showAll');
-    },
-    endEdit() {
-      event.currentTarget.blur();
-      // On enter close edit input and save value to API
-      this.updateScores();
-    },
-    async updateScores() {
-      const scoresService = new ScoresService();
-      let position = 0;
-      for (let i = 0; i < this.newScore.length; i++) {
-        if (this.newScore[i] != undefined) {
-          position = i;
-        }
-      }
-      const updateScore = {
-        score: this.newScore[position],
-        studentId: this.students[position].id,
-      };
-      await scoresService._updateEntry(this.scores[position].id, updateScore);
     },
   },
 };
@@ -102,36 +76,5 @@ export default {
 
 .stripe {
   background-color: #f5f5f5;
-}
-
-.student-score {
-  border: none;
-  background-image: none;
-  background-color: transparent;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-  font-size: 4rem;
-  height: 100%;
-  margin-left: auto;
-  margin-right: 20px;
-  text-align: center;
-  width: 15rem;
-}
-.edit-me:focus {
-  width: 15rem;
-  height: 100%;
-  border-radius: 20px;
-  background-color: pink;
-}
-
-.student-avatar {
-  width: 150px;
-}
-.student-avatar--container {
-  width: 150px;
-  height: 150px;
-  overflow: hidden;
-  border-radius: 150px;
 }
 </style>
