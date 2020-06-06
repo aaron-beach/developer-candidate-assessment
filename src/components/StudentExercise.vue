@@ -5,10 +5,12 @@
     </div>
     {{ student.name }}
     <form class="input-container" id="userInput" @submit.prevent="checkForm">
-      <div v-if="errors.length">
+      <div v-if="errors.length" class="error-container">
         <b v-text="'Please correct the following error(s):'"></b>
         <ul>
-          <li v-for="{ error, i } in errors" :key="i">{{ error }}</li>
+          <li class="error" v-for="error in errors" :key="error">
+            {{ error }}
+          </li>
         </ul>
       </div>
 
@@ -135,6 +137,10 @@ export default {
 }
 .error {
   color: red;
+}
+.error-container {
+  color: red;
+  font-weight: 100;
 }
 input[type='number'] {
   -moz-appearance: textfield;
