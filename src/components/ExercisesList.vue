@@ -22,6 +22,8 @@ export default {
   props: {
     averageScore: {
       type: Number,
+      required: true,
+      default: 0,
     },
   },
   data() {
@@ -42,7 +44,9 @@ export default {
   methods: {
     async classScore() {
       const score = this.getClassAverageScore();
-      this.$emit('update:averageScore', Number(score));
+      process.nextTick(() => {
+        this.$emit('update:averageScore', Number(score));
+      });
     },
     calculateAverageScore: function(scores) {
       const totalScore = scores.reduce((sum, score) => +sum + +score);
@@ -65,7 +69,10 @@ export default {
       const exerciseAverage = this.exercises.find(
         (elem) => elem.id === exercise
       );
-      this.$emit('showDetail', exerciseAverage);
+      // Emit only after the constructor has finished
+      process.nextTick(() => {
+        this.$emit('showDetail', exerciseAverage);
+      });
     },
     async getAverageScore() {
       try {

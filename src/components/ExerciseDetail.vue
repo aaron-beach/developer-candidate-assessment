@@ -25,6 +25,7 @@ export default {
   props: {
     exercise: {
       type: Object,
+      required: true,
     },
   },
   data: function() {
@@ -54,16 +55,16 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .exercise {
   display: flex;
   border-bottom: 1px solid #add8e6;
   width: 100%;
   padding: 15px;
   font-weight: 600;
-  cursor: pointer;
 }
 .exercise-title {
+  cursor: pointer;
   width: 100%;
   display: flex;
   justify-content: space-between;
