@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 import Vue from 'vue';
-import { shallowMount, Wrapper } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import ExerciseService from '@/services/ExerciseService';
 import ExercisesList from '@/components/ExercisesList.vue';
 jest.mock('@/services/ExerciseService');
@@ -37,5 +39,38 @@ describe('ExercisesList.vue', () => {
     await Vue.nextTick();
 
     expect(wrapper.vm.exercises).toBe(exercises);
+  });
+
+  it('returns average score from array', async () => {
+    expect(wrapper.vm.calculateAverageScore([4, 2])).toBe('3.0');
+    expect(wrapper.vm.calculateAverageScore([2, 2, 2, 2])).toBe('2.0');
+    expect(wrapper.vm.calculateAverageScore([-4, 2])).toBe('-1.0');
+  });
+
+  it('emits object when called', async () => {
+    wrapper.vm.$emit('averageScore');
+
+    expect(typeof wrapper.vm.classScore()).toBe('object');
+    expect(wrapper.emitted('averageScore')).toBeTruthy();
+  });
+  it('emits object when called', async () => {
+    wrapper.vm.$emit('showDetail');
+
+    expect(wrapper.emitted('showDetail')).toBeTruthy();
+  });
+
+  it('calls showDetail when click on Exercise', () => {
+    spyOn(wrapper.vm, 'showDetail');
+
+    wrapper.find('.exercise').trigger('click');
+    expect(wrapper.vm.showDetail).toBeCalled();
+  });
+
+  it('calls handleClick when click on exercise', () => {
+    const stub = jest.fn();
+    wrapper.setMethods({ showDetail: stub });
+
+    const el = wrapper.find('.exercise').trigger('click');
+    expect(stub).toBeCalled();
   });
 });
