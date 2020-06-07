@@ -31,6 +31,8 @@ I'm proud to submit my solution for your consideration and thank you for the opp
 
 The logic behind not including additional views is simple. The motivation behind this decision was to tailor views to the user experience. This view allows the user to click/view/edit exercises within a single view component. 
 
+![Logic](https://github.com/aaron-beach/developer-candidate-assessment/blob/master/images/logicflow.png)
+
 ---
 ### Exercises list page 
 

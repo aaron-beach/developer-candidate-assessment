@@ -13,7 +13,7 @@
       <exercise-detail
         v-if="details"
         :exercise="exerciseDetails"
-        @showAll="showAllExcersizes"
+        @showAll="showAllExersizes"
       />
     </card>
   </div>
@@ -38,7 +38,7 @@ export default {
       this.details = !this.details;
       this.exerciseDetails = variable;
     },
-    showAllExcersizes: function() {
+    showAllExersizes: function() {
       this.details = !this.details;
     },
   },
