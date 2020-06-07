@@ -46,19 +46,15 @@ export default {
   methods: {
     checkForm: function() {
       const invalidInput = this.wrongNumber(this.score);
-      console.log(invalidInput);
 
       if (invalidInput) {
-        console.log('not valid');
         event.preventDefault();
         event.currentTarget.focus();
         this.validateInput = false;
         this.errors = [];
         this.errors.push('Scores are a number between 0 and 3.');
         this.score = '';
-        console.log(this.errors);
       } else {
-        console.log('success');
         event.currentTarget.blur();
         this.validateInput = true;
         this.errors = [];
@@ -73,8 +69,6 @@ export default {
       return false;
     },
     endEdit() {
-      console.log('end called');
-
       if (this.validateInput) {
         this.updateScores();
       }

@@ -22,7 +22,6 @@ export default {
   props: {
     averageScore: {
       type: Number,
-      required: true,
       default: 0,
     },
   },
@@ -32,12 +31,9 @@ export default {
     };
   },
   async created() {
-    const includeStudentScores = '?_embed=studentScores';
     const exerciseService = new ExerciseService();
-    await exerciseService.getAll();
-    this.exercises = await exerciseService._getAllIncluding(
-      includeStudentScores
-    );
+    this.exercises = await exerciseService.getAll();
+    this.exercises = await exerciseService.exercisesWithScores();
     this.getAverageScore();
     this.classScore();
   },
@@ -49,7 +45,7 @@ export default {
       });
     },
     calculateAverageScore: function(scores) {
-      const totalScore = scores.reduce((sum, score) => +sum + +score);
+      const totalScore = scores.reduce((sum, score) => +sum + +score, 0);
       const averageScore = totalScore / scores.length;
       return averageScore.toFixed(1);
     },
