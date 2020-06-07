@@ -37,32 +37,19 @@ export default {
   watch: {
     exercises: {
       handler() {
-        this.setAverageScore();
+        this.setAverageScore(this.exercises);
         this.setClassScore();
       },
-      // immediate: true,
-    },
-  },
-  computed: {
-    loading() {
-      if (this.exercise.length <= 0) {
-        return true;
-      }
-      return false;
     },
   },
   methods: {
-    async setAverageScore() {
-      if (this.exercises.length > 0) {
-        for (let i = 0; i < this.exercises.length; i++) {
-          const scores = this.getArrayFromObject(
-            this.exercises[i].studentScores,
-            'score'
-          );
-          this.exercises[i].averageScore = this.getAverageNumberFromArray(
-            scores
-          );
-        }
+    async setAverageScore(object) {
+      for (let i = 0; i < object.length; i++) {
+        const scores = this.getArrayFromObject(
+          object[i].studentScores,
+          'score'
+        );
+        object[i].averageScore = this.getAverageNumberFromArray(scores);
       }
     },
     async setClassScore() {

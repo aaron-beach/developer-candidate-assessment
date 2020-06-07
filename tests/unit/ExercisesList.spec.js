@@ -51,8 +51,6 @@ describe('ExercisesList.vue', () => {
 
   it('emits object when called', async () => {
     wrapper.vm.$emit('averageScore');
-
-    expect(typeof wrapper.vm.setClassScore()).toBe('object');
     expect(wrapper.emitted('averageScore')).toBeTruthy();
   });
   it('emits object when called', async () => {
@@ -74,5 +72,15 @@ describe('ExercisesList.vue', () => {
 
     const el = wrapper.find('.exercise').trigger('click');
     expect(stub).toBeCalled();
+  });
+
+  it('return array from object', () => {
+    expect(wrapper.vm.getArrayFromObject({ key: 1 }, 'key')).toEqual([]);
+  });
+  it('exercise element exists', () => {
+    expect(wrapper.find('.exercise').exists()).toBe(true);
+  });
+  it('average score element exists', () => {
+    expect(wrapper.find('.exercise-average-score').exists()).toBe(true);
   });
 });
