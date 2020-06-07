@@ -1,19 +1,16 @@
 <template>
   <div class="student">
-    <div class="student-avatar--container">
-      <img :src="student.avatar" alt="student avatar" class="student-avatar" />
-    </div>
-    {{ student.name }}
-    <form class="input-container" id="userInput" @submit.prevent="checkForm">
-      <div v-if="errors.length" class="error-container">
-        <b v-text="'Please correct the following error(s):'"></b>
-        <ul>
-          <li class="error" v-for="error in errors" :key="error">
-            {{ error }}
-          </li>
-        </ul>
+    <span class="student-container">
+      <div class="student-avatar--container">
+        <img
+          :src="student.avatar"
+          alt="student avatar"
+          class="student-avatar"
+        />
       </div>
-
+      <h2 v-text="student.name" class="student-name" />
+    </span>
+    <form class="input-container" id="userInput" @submit.prevent="checkForm">
       <input
         @keyup.enter="blur"
         class="student-score edit-me"
@@ -22,6 +19,14 @@
         v-model.number="score"
         required
       />
+      <div v-if="errors.length" class="error-container">
+        <b v-text="'Please correct the following error(s):'"></b>
+        <ul>
+          <li class="error" v-for="error in errors" :key="error">
+            {{ error }}
+          </li>
+        </ul>
+      </div>
     </form>
   </div>
 </template>
@@ -90,8 +95,13 @@ export default {
 
 <style scoped>
 .student {
-  width: 100%;
+  align-content: space-around;
   display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.student-name {
+  height: 50%;
 }
 .student-score {
   border: none;
@@ -127,7 +137,7 @@ export default {
   display: flex;
   flex-direction: column;
   margin-left: auto;
-  margin-right: 20px;
+  margin-right: 10px;
 }
 .error {
   color: red;
@@ -135,6 +145,7 @@ export default {
 .error-container {
   color: red;
   font-weight: 100;
+  font-size: 10px;
 }
 input[type='number'] {
   -moz-appearance: textfield;
