@@ -122,7 +122,7 @@ export default {
   width: 15rem;
   height: 100%;
   border-radius: 20px;
-  background-color: pink;
+  background-color: rgba(167, 167, 167, 0.657);
 }
 .student-avatar {
   width: 150px;
@@ -145,7 +145,7 @@ export default {
 .error-container {
   color: red;
   font-weight: 100;
-  font-size: 10px;
+  font-size: 14px;
 }
 input[type='number'] {
   -moz-appearance: textfield;

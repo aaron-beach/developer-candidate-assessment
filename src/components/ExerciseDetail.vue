@@ -56,23 +56,29 @@ export default {
 </script>
 
 <style scoped>
+* {
+  transition: all 0.3s ease;
+}
 .exercise {
-  display: flex;
   border-bottom: 1px solid #add8e6;
-  width: 100%;
-  padding: 15px;
+  display: flex;
   font-weight: 600;
+  padding: 15px;
+  width: 100%;
 }
 .exercise-title {
+  background-color: rgba(31, 154, 255, 0);
   cursor: pointer;
-  width: 100%;
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  height: 7rem;
+  line-height: 7rem;
 }
 
 .exercise:hover,
 .exercise-title:hover {
-  background-color: rgba(1, 141, 255, 0.1);
+  background-color: rgba(1, 141, 255, 0.2);
 }
 
 .stripe {

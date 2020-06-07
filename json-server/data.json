@@ -139,13 +139,13 @@
     {
       "studentId": 0,
       "exerciseId": 1,
-      "score": "3",
+      "score": 1,
       "id": 0
     },
     {
       "studentId": 1,
       "exerciseId": 2,
-      "score": "1",
+      "score": 1,
       "id": 1
     },
     {
