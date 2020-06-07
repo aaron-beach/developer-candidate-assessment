@@ -10,7 +10,15 @@
       </div>
       <h2 v-text="student.name" class="student-name" />
     </span>
+    <!--
+    triggered on submit
+    @event submit
+  -->
     <form class="input-container" id="userInput" @submit.prevent="checkForm">
+       <!--
+    triggered on keyup
+    @event keyup.enter
+  -->
       <input
         @keyup.enter="blur"
         class="student-score edit-me"
@@ -49,9 +57,12 @@ export default {
     };
   },
   methods: {
+    /**
+     * Gets called on form submit/enter.
+     *
+     */
     checkForm: function() {
       const invalidInput = this.wrongNumber(this.score);
-
       if (invalidInput) {
         event.preventDefault();
         event.currentTarget.focus();
@@ -67,20 +78,37 @@ export default {
         this.endEdit();
       }
     },
+    /**
+     * Gets called when on exercises change.
+     *
+     * @param {Number} score value of new input.
+     */
     wrongNumber: function(score) {
       if (score > 3) {
         return true;
       }
       return false;
     },
+     /**
+     * Gets called by formcheck.
+     *
+     */
     endEdit() {
       if (this.validateInput) {
         this.updateScores();
       }
     },
+     /**
+     * Gets called on input Enter key.
+     *
+     */
     blur() {
       event.currentTarget.blur();
     },
+    /**
+     * Gets called by endEdit.
+     *
+     */
     async updateScores() {
       const scoresService = new ScoresService();
       const updateScore = {

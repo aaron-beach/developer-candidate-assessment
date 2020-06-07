@@ -1,5 +1,9 @@
 <template>
   <div>
+    <!--
+    triggered on click
+    @event showAll
+  -->
     <div @click="showAll" class="exercise-title">
       <h1>{{ exercise.name }}</h1>
       <h1 class="average-score">
@@ -23,6 +27,9 @@ import StudentExercise from './StudentExercise';
 export default {
   name: 'ExerciseDetail',
   props: {
+    /**
+     * The exercise to display.
+     */
     exercise: {
       type: Object,
       required: true,
@@ -41,6 +48,10 @@ export default {
     this.students = await studentService.getAll();
   },
   computed: {
+    /**
+     * The scores to display.
+     *
+     */
     scores: function() {
       return this.students.map((item, i) =>
         Object.assign({}, item, this.exercise.studentScores[i])
@@ -48,6 +59,11 @@ export default {
     },
   },
   methods: {
+    /**
+     * Gets called when the user clicks on the title
+     * 
+     * @event ShowAll
+     */
     showAll: function() {
       this.$emit('showAll');
     },

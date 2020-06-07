@@ -1,5 +1,10 @@
 <template>
   <div>
+    <!--
+    triggered on click
+    @event click
+    @property {number} id - filter called
+  -->
     <div
       class="exercise"
       :class="{ stripe: i % 2 === 0 }"
@@ -20,6 +25,9 @@ import ExerciseService from '@/services/ExerciseService';
 
 export default {
   props: {
+    /**
+     * The class average sync'ed for the views to access.
+     */
     averageScore: {
       type: Number,
       default: 0,
@@ -35,6 +43,10 @@ export default {
     this.exercises = await exerciseService.exercisesWithScores();
   },
   watch: {
+    /**
+     * Gets called when on exercises change.
+     *
+     */
     exercises: {
       handler() {
         this.setAverageScore(this.exercises);
@@ -43,6 +55,11 @@ export default {
     },
   },
   methods: {
+    /**
+     * Gets called when on exercises change.
+     *
+     * @param {Object} object Exercises from api call.
+     */
     async setAverageScore(object) {
       for (let i = 0; i < object.length; i++) {
         const scores = this.getArrayFromObject(
@@ -52,13 +69,28 @@ export default {
         object[i].averageScore = this.getAverageNumberFromArray(scores);
       }
     },
+    /**
+     * Gets called when on exercises change.
+     *
+     */
     async setClassScore() {
       const scores = this.getArrayFromObject(this.exercises, 'averageScore');
       const score = this.getAverageNumberFromArray(scores);
       process.nextTick(() => {
+        /**
+         * Triggers when the Average number changes
+         *
+         * @property {number} newValue new value set
+         */
         this.$emit('update:averageScore', Number(score));
       });
     },
+    /**
+     * Gets called when the user clicks on the exercise
+     * 
+     * @event showDetail
+     * @type {object}
+     */
     showDetail: function(exercise) {
       const exerciseAverage = this.exercises.find(
         (elem) => elem.id === exercise
@@ -67,11 +99,22 @@ export default {
         this.$emit('showDetail', exerciseAverage);
       });
     },
+     /**
+     * Gets called when averages are set.
+     *
+     * @param {Array} array Array of Numbers.
+     */
     getAverageNumberFromArray: function(array) {
       const total = array.reduce((sum, value) => +sum + +value, 0);
       const average = total / array.length;
       return average.toFixed(1);
     },
+     /**
+     * Gets called when averages are set.
+     *
+     * @param {Object} object Exercise from api call.
+     * @param {String} key name of key in the object.
+     */
     getArrayFromObject: function(object, key) {
       let array = [];
       for (let i = 0; i < object.length; i++) {
