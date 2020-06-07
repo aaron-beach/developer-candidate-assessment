@@ -1,6 +1,92 @@
 # Tech Elevator Developer Coding Assessment
 
 Welcome! We are very excited that you have chosen to pursue a developer position with Tech Elevator!
+---
+## Table of contents
+* [Motivation](#motivation)
+* [Methodology](#methodology)
+* [Issues](#issues)
+* [Next-Steps](#next-steps)
+* [To-Dos](#to-dos)
+* [Author](#author)
+* [Assignment](#your-mission)
+* [Usage](#about-the-project)
+
+
+
+---
+## Motivation
+
+### Utilize existing structure. 
+
+In addition to stated requirements I chose to attempt to stay within the logic of the existing structure and use the services to manage the API requests. An alternative pattern to this solution would include a Vuex state management that utilizes actions to maintain API requests. A store pattern would allow the component to access common data and perform mutations when necessary. 
+
+I'm proud to submit my solution for your consideration and thank you for the opportunity. I look forward to discussing results. 
+
+---
+## Methodology
+
+---
+### Single Exercises View
+
+The logic behind not including additional views is simple. The motivation behind this decision was to tailor views to the user experience. This view allows the user to click/view/edit exercises within a single view component. 
+
+---
+### Exercises list page 
+
+
+
+![Exercises](https://github.com/aaron-beach/developer-candidate-assessment/blob/master/images/exercise-list.png)
+
+---
+### Exercise detail Page
+
+![Detail](https://github.com/aaron-beach/developer-candidate-assessment/blob/master/images/exercise-detail.png)
+
+---
+### Update student exercise score
+
+![Input](https://github.com/aaron-beach/developer-candidate-assessment/blob/master/images/score-input.png)
+
+![Validation](https://github.com/aaron-beach/developer-candidate-assessment/blob/master/images/input-validation.png)
+
+
+---
+## To Dos
+
+- [x] Calculate and display the average exerise score from api data. 
+- [x] Calculate and display the overall average class score.
+- [x] Provide exercise detail view displaying each student score
+- [x] Student scores are editable when clicked and saved on enter. 
+
+
+---
+## Issues
+
+- Update StudentScores: JSON-server returned "400 Bad Request"
+    Solution: Add id to StudentScores object to target specific elements
+---
+## Next Steps
+- Refactor average score logic into reusable mixin or implement store.
+
+---
+## Author
+
+👤 **Aaron Beach**
+
+* Website: aaronbeach.dev
+* Github: [@aaron-beach](https://github.com/aaron-beach)
+* LinkedIn: [@arbeach](https://linkedin.com/in/arbeach)
+
+---
+---
+
+
+
+
+# Tech Elevator Developer Coding Assessment
+
+Welcome! We are very excited that you have chosen to pursue a developer position with Tech Elevator!
 
 ## Your Mission
 
