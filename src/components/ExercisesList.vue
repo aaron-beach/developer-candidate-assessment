@@ -32,53 +32,65 @@ export default {
   },
   async created() {
     const exerciseService = new ExerciseService();
-    this.exercises = await exerciseService.getAll();
     this.exercises = await exerciseService.exercisesWithScores();
-    this.getAverageScore();
-    this.classScore();
+  },
+  watch: {
+    exercises: {
+      handler() {
+        this.setAverageScore();
+        this.setClassScore();
+      },
+      // immediate: true,
+    },
+  },
+  computed: {
+    loading() {
+      if (this.exercise.length <= 0) {
+        return true;
+      }
+      return false;
+    },
   },
   methods: {
-    async classScore() {
-      const score = this.getClassAverageScore();
+    async setAverageScore() {
+      if (this.exercises.length > 0) {
+        for (let i = 0; i < this.exercises.length; i++) {
+          const scores = this.getArrayFromObject(
+            this.exercises[i].studentScores,
+            'score'
+          );
+          this.exercises[i].averageScore = this.getAverageNumberFromArray(
+            scores
+          );
+        }
+      }
+    },
+    async setClassScore() {
+      const scores = this.getArrayFromObject(this.exercises, 'averageScore');
+      const score = this.getAverageNumberFromArray(scores);
       process.nextTick(() => {
         this.$emit('update:averageScore', Number(score));
       });
-    },
-    calculateAverageScore: function(scores) {
-      const totalScore = scores.reduce((sum, score) => +sum + +score, 0);
-      const averageScore = totalScore / scores.length;
-      return averageScore.toFixed(1);
-    },
-    getArrayOfStudentScores: function(object) {
-      let exerciseScores = [];
-      object.forEach((student) => exerciseScores.push(student.score));
-      return exerciseScores;
-    },
-    getClassAverageScore: function() {
-      let scores = [];
-      this.exercises.forEach((exercise) => {
-        scores.push(exercise.averageScore);
-      });
-      return this.calculateAverageScore(scores);
     },
     showDetail: function(exercise) {
       const exerciseAverage = this.exercises.find(
         (elem) => elem.id === exercise
       );
-      // Emit only after the constructor has finished
       process.nextTick(() => {
         this.$emit('showDetail', exerciseAverage);
       });
     },
-    async getAverageScore() {
-      try {
-        this.exercises.forEach((exercise) => {
-          const scores = this.getArrayOfStudentScores(exercise.studentScores);
-          exercise.averageScore = this.calculateAverageScore(scores);
-        });
-      } catch (ex) {
-        console.log(ex);
+    getAverageNumberFromArray: function(array) {
+      const total = array.reduce((sum, value) => +sum + +value, 0);
+      const average = total / array.length;
+      return average.toFixed(1);
+    },
+    getArrayFromObject: function(object, key) {
+      let array = [];
+      for (let i = 0; i < object.length; i++) {
+        array.push(object[i][key]);
       }
+      return array;
     },
   },
 };

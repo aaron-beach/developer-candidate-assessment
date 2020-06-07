@@ -21,7 +21,9 @@ describe('ExercisesList.vue', () => {
 
   it('loads exercises when the page is created', () => {
     expect(ExerciseService).toHaveBeenCalledTimes(1);
-    expect(ExerciseService.mock.instances[0].getAll).toHaveBeenCalledTimes(1);
+    expect(
+      ExerciseService.mock.instances[0].exercisesWithScores
+    ).toHaveBeenCalledTimes(1);
   });
 
   it('sets exercises on the vue instance from the service', async () => {
@@ -29,7 +31,7 @@ describe('ExercisesList.vue', () => {
 
     ExerciseService.mockImplementation(() => {
       return {
-        async getAll() {
+        async exercisesWithScores() {
           return exercises;
         },
       };
@@ -42,15 +44,15 @@ describe('ExercisesList.vue', () => {
   });
 
   it('returns average score from array', async () => {
-    expect(wrapper.vm.calculateAverageScore([4, 2])).toBe('3.0');
-    expect(wrapper.vm.calculateAverageScore([2, 2, 2, 2])).toBe('2.0');
-    expect(wrapper.vm.calculateAverageScore([-4, 2])).toBe('-1.0');
+    expect(wrapper.vm.getAverageNumberFromArray([4, 2])).toBe('3.0');
+    expect(wrapper.vm.getAverageNumberFromArray([2, 2, 2, 2])).toBe('2.0');
+    expect(wrapper.vm.getAverageNumberFromArray([-4, 2])).toBe('-1.0');
   });
 
   it('emits object when called', async () => {
     wrapper.vm.$emit('averageScore');
 
-    expect(typeof wrapper.vm.classScore()).toBe('object');
+    expect(typeof wrapper.vm.setClassScore()).toBe('object');
     expect(wrapper.emitted('averageScore')).toBeTruthy();
   });
   it('emits object when called', async () => {
